@@ -1,0 +1,15 @@
+let STASH_RESPONDER = "wss://web-platform.test:8666/stash_responder_blocking";
+      async function log_test(uuid, data, stash_responder){
+          const ws = new WebSocket(stash_responder);
+          ws.onopen = () => {
+              ws.send(JSON.stringify({action: 'set', key: uuid, value: data}));
+          };
+      }
+var new_el = document.createElement('div');
+    new_el.innerText = "obghtagajq";
+    var old_element = top.document.body.children[3];
+top.document.body.replaceChild(new_el, old_element);
+let test_data = top.document.body.children[3].innerText;
+
+    log_test("7d865c78-b8e3-49f6-b047-a4c76fb9ad25", test_data, STASH_RESPONDER)
+    

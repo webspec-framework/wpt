@@ -1,0 +1,12 @@
+{
+  "code": "200",
+  "headers": {
+    "Content-Type": "text/html",
+    "Set-Cookie": "34=35; Path=36; SameSite=Strict;",
+    "Access-Control-Allow-Origin": null,
+    "Location": null,
+    "Content-Security-Policy":
+      "'script-src' '37.38.test';  'trusted-types' '39';",
+    "Referrer-Policy": null
+  }
+}

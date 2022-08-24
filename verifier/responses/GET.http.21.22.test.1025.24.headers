@@ -1,0 +1,11 @@
+{
+  "code": "200",
+  "headers": {
+    "Content-Type": "application/x-javascript",
+    "Set-Cookie": null,
+    "Access-Control-Allow-Origin": "",
+    "Location": "",
+    "Content-Security-Policy": "'script-src' '206.test:207'; ",
+    "Referrer-Policy": null
+  }
+}
