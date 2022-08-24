@@ -1,0 +1,63 @@
+<!doctype html>
+<meta charset=utf-8>
+<script src=/resources/testharness.js></script>
+<script src=/resources/testharnessreport.js></script>
+<script src="/resources/channel.sub.js"></script>
+<script src=/websockets/constants.sub.js></script>
+<script src=/portals/resources/stash-utils.sub.js></script>
+<script src="/common/utils.js"></script>
+
+<script>
+
+const delay = (time) =>
+      new Promise((resolve) => setTimeout(resolve, time))
+
+setup({explicit_timeout: true});
+
+const timeout_fn = async(time, label) => {
+  await delay(time) 
+  assert_true(false, label)
+}
+
+// function run_test(test_fn, timeout, label) {
+//   return Promise.race(
+//     [ test_fn(), 
+//       timeout_fn(timeout, label)
+//     ]);
+// }
+
+
+function run_test(timeout, label, ...fns) {
+  return Promise.race(
+    [ Promise.all(fns.map((x) => x())), 
+      timeout_fn(timeout, label)
+    ]);
+}
+
+
+promise_test(async t => {
+  window.open(`http://30.31.test:1024/verifier/server.py?res=33`); 
+
+  await run_test(5000, "Timed out", 
+    
+    () => StashUtils.takeValue("c7df464b-ec9e-4896-8de5-53047b19b88a").then(t.step_func(value => {
+        assert_equals(value, "GET.http.21.22.test.1025.24", "test 3");
+    })),
+    
+    () => StashUtils.takeValue("cec0b6ad-2aeb-4f41-ae07-54ffe2a5183e").then(t.step_func(value => {
+        assert_equals(value, "GET.http.30.31.test.1024.45", "test 2");
+    })),
+    
+    () => StashUtils.takeValue("0b641dfe-8109-4c42-b922-140bc1715b60").then(t.step_func(value => {
+        assert_equals(value, "GET.http.30.31.test.1024.33", "test 1");
+    })),
+    
+    () => StashUtils.takeValue("7d865c78-b8e3-49f6-b047-a4c76fb9ad25").then(t.step_func(value => {
+        assert_equals(value, "obghtagajq", "test 0");
+    })),
+     
+    async () => { return }
+  );
+}, "CSP INCONSISTENCY ATTACK TRACE");
+
+</script>
